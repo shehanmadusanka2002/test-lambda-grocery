@@ -1,0 +1,37 @@
+name: Deploy Backend to Lambda
+
+on:
+  push:
+    branches:
+      - main # main branch එකට push කරපු ගමන් වැඩේ පටන් ගන්නවා
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -t lib -r backend/requirements.txt # backend folder එකේ ඇති requirements ටික lib එකට දානවා
+          cp backend/main.py lib/ # main.py එකත් ඒකටම කොපි කරනවා
+
+      - name: Create Zip file
+        run: |
+          cd lib
+          zip -r ../function.zip . # ඔක්කොම ටික function.zip එකට දානවා
+
+      - name: Deploy to AWS Lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1 # ඔයාගේ region එක
+          function_name: test-lambda-grocery-api # ඔයාගේ ලැම්ඩා එකේ නම මෙතනට දෙන්න
+          zip_file: function.zip
