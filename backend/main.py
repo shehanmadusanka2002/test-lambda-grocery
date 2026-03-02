@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import os
 from typing import List
-from mangum import Mangum # 👈 අලුතින් එක් කළා
+from mangum import Mangum # 👈 අලුතින් එක් කළා!!
 
 # 1. Database Configuration this section එකේ DATABASE_URL එක ලැම්ඩා සෙටින්ග්ස් වල අන්තිමට '/postgres' ලෙස තිබිය යුතුයි
 # DATABASE_URL එක ලැම්ඩා සෙටින්ග්ස් වල අන්තිමට '/postgres' ලෙස තිබිය යුතුයි
